@@ -4,6 +4,13 @@ import bcrypt from 'bcryptjs'
 const prisma = new PrismaClient()
 
 async function main() {
+
+    const existing = await prisma.store.findFirst()
+    if (existing) {
+      console.log('✓ Seed já aplicado, pulando')
+    return
+  }
+
   await prisma.movement.deleteMany()
   await prisma.product.deleteMany()
   await prisma.user.deleteMany()
