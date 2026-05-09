@@ -7,7 +7,15 @@ import { errorHandler } from './middlewares/error.middleware'
 
 const app = express()
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',')
+  : ['http://localhost:5173']
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}))
+
 app.use(express.json())
 app.use(cookieParser())
 
